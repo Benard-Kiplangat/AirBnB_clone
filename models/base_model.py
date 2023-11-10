@@ -3,6 +3,7 @@
 import cmd
 import uuid
 import datetime
+from . import storage
 
 
 class BaseModel(cmd.Cmd):
@@ -10,8 +11,8 @@ class BaseModel(cmd.Cmd):
         attributes (class): Cmd module
     """
     id = str(uuid.uuid4())
-    created_at = datetime.datetime.now().isoformat()
-    updated_at = datetime.datetime.now().isoformat()
+    created_at = datetime.datetime.now()
+    updated_at = datetime.datetime.now()
 
     def __init__(self, *args, **kwargs):
         if kwargs:
@@ -22,20 +23,23 @@ class BaseModel(cmd.Cmd):
                     setattr(self, key, value)
                 if "id" not in kwargs.keys():
                     setattr(self, "id", str(uuid.uuid4()))
-                time = datetime.datetime.now().isoformat()
+                time = datetime.datetime.now()
                 if "created_at" not in kwargs.keys():
                     setattr(self, "created_at", time)
                 if "updated_at" not in kwargs.keys():
                     setattr(self, "updated_at", time)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = updated_at = datetime.datetime.now().isoformat()
+            self.created_at = updated_at = datetime.datetime.now()
 
     def __str__(self):
         return "[{}] ({}) <{}>".format(self.name, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.datetime.now().isoformat()
+        storage.save()
+        if not kwargs:
+            storage.new(self)
 
     def to_dict(self):
         my_dict = self.__dict__.copy()
