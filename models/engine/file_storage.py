@@ -3,6 +3,7 @@
 """
 import json
 import os
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -34,7 +35,6 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 my_reload_dict = json.load(f)
                 for key, value in (my_reload_dict.items()):
-                        self.__objects[key] = value["__class__"](**value)
+                    self.__objects[key] = eval(value["__class__"])(**value)
         else:
             pass
-

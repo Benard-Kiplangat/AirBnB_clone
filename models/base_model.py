@@ -3,10 +3,10 @@
 import cmd
 import uuid
 import datetime
-from . import storage
+import models
 
 
-class BaseModel(cmd.Cmd):
+class BaseModel:
     """BaseModel class for the console of our AirBnB project
         attributes (class): Cmd module
     """
@@ -31,14 +31,14 @@ class BaseModel(cmd.Cmd):
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         return "[{}] ({}) <{}>".format(self.name, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         my_dict = self.__dict__.copy()
