@@ -2,6 +2,7 @@
 """A class that serializes instances to a JSON file and decerializes them back
 """
 import json
+import os
 
 
 class FileStorage:
@@ -17,21 +18,23 @@ class FileStorage:
 
     def new(self, obj):
         if obj:
-            key = "{}.{}".format(obj.__name__, obj.id)
+            key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
-            self.save(self)
+            self.save()
 
     def save(self):
-        f = open(self.__file_path, "w")
         my_dict = {}
         for key, value in self.__objects.items():
             my_dict[key] = value.to_dict()
-        json.dump(my_dict, f)
-        f.close
+        with open(self.__file_path, 'w') as f:
+            json.dump(my_dict, f)
 
     def reload(self):
-        if self.__file_path:
-            pass
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r') as f:
+                my_reload_dict = json.load(f)
+                for key, value in (my_reload_dict.items()):
+                        self.__objects[key] = value["__class__"](**value)
         else:
             pass
 

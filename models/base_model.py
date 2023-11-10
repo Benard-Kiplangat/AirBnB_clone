@@ -30,18 +30,19 @@ class BaseModel(cmd.Cmd):
                     setattr(self, "updated_at", time)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = updated_at = datetime.datetime.now()
+            self.created_at = self.updated_at = datetime.datetime.now()
+            storage.new(self)
 
     def __str__(self):
         return "[{}] ({}) <{}>".format(self.name, self.id, self.__dict__)
 
     def save(self):
-        self.updated_at = datetime.datetime.now().isoformat()
+        self.updated_at = datetime.datetime.now()
         storage.save()
-        if not kwargs:
-            storage.new(self)
 
     def to_dict(self):
         my_dict = self.__dict__.copy()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
         my_dict["__class__"] = type(self).__name__
         return my_dict
