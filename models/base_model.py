@@ -34,7 +34,11 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        return "[{}] ({}) <{}>".format(self.name, self.id, self.__dict__)
+        return "[{}] ({}) <{}>".format(type(self).__name__, self.id, self.__dict__)
+
+    def __repr__(self):
+        """Returns a string representation of the instance"""
+        return self.__str__()
 
     def save(self):
         self.updated_at = datetime.datetime.now()
