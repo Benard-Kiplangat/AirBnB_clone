@@ -21,15 +21,18 @@ class FileStorage:
         self.__objects = {}
 
     def all(self):
+        """returns all object instances"""
         return self.__objects
 
     def new(self, obj):
+        """A method that creates new instances"""
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
             self.save()
 
     def save(self):
+        """A method that saves new instances to file"""
         my_dict = {}
         for key, value in self.__objects.items():
             my_dict[key] = value.to_dict()
@@ -46,6 +49,7 @@ class FileStorage:
         self.save()
 
     def reload(self):
+        """A function to reload existing instances to memory"""
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as f:
                 my_reload_dict = json.load(f)
