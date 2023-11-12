@@ -20,8 +20,11 @@ class FileStorage:
         self.__file_path = "file.json"
         self.__objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """returns all object instances"""
+        if cls:
+            return {key: obj for (key, obj) in self.__objects.items()
+                    if isinstance(obj, cls)}
         return self.__objects
 
     def new(self, obj):

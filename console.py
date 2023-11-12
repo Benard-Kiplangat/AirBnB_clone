@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
+    """The HBNB command line"""
     cmd.Cmd.prompt = "(hbnb) "
 
     def emptyline(self, line=""):
@@ -29,9 +30,11 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def help_quit(self):
+        """Documentation for quit"""
         print("Quits hbnb loop of hbnb when user enters quit.\n")
 
     def help_EOF(self):
+        """Documentation for EOF"""
         print("Quits hbnb loop when user enters EOF.\n")
 
     def do_create(self, line):
@@ -103,14 +106,23 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all instances based or not on class name"""
         all_objs = storage.all()
-        for obj_id in all_objs.keys():
-            obj = all_objs[obj_id]
-            obj_name = type(obj).__name__
-            if line:
-                if obj_name == line:
+        attrbs = line.split()
+        obj_name_avail = 0
+        if (len(attrbs) >= 1):
+            for obj_id in all_objs.keys():
+                obj = all_objs[obj_id]
+                obj_name = type(obj).__name__
+                if obj_name == attrbs[0]:
+                    obj_name_avail = 1
                     print(obj)
-                else:
-                    print(obj)
+            if obj_name_avail == 0:
+                print("** class doesn't exist **")
+        elif line == "":
+            for obj_id in all_objs.keys():
+                obj = all_objs[obj_id]
+                print(obj)
+        else:
+            pass
 
     def do_update(self, line):
         """Updates an instance based on class name or id"""
@@ -148,19 +160,53 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def count(self, line):
+        """Counts the number of all instances"""
+        all_objs = storage.all()
+        count = 0
+        my_list = line.split()
+        for obj_id in all_objs.keys():
+            if type(all_objs[obj_id]).__name__ == my_list[0]:
+                count += 1
+        if count == 0:
+            print("** class doesn't exist **")
+        else:
+            print(count)
+
+    def default(self, line):
+        """Default command to handle all instances retrieval or their count
+        """
+        my_list = line.split('.')
+        if len(my_list) >= 2:
+            if my_list[1] == "all()":
+                self.do_all(my_list[0])
+            elif my_list[1] == "count()":
+                self.count(my_list[0])
+            else:
+                cmd.Cmd.default(self, line)
+
     def help_create(self):
+        """Documentation for create""" 
         print("Creates a new instance, saves it to file and print id.\n")
 
+    def help_count(self):
+        """Documentation for count"""
+        print("Counts the number of instances.\n")
+
     def help_show(self):
+        """Documentation for show"""
         print("Prints a string representation of an instance.\n")
 
     def help_destroy(self):
+        """Documentation for destroy"""
         print("Deletes an instance based on the class name and id\n")
 
     def help_all(self):
+        """Documentation for all"""
         print("Prints all string representation of all instances.\n")
 
     def help_update(self):
+        """Documentation for update"""
         print("Updates an instance by adding or updating an attribute.\n")
 
 
