@@ -8,9 +8,9 @@ from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
-    cmd.Cmd.prompt = "(hbnb)"
+    cmd.Cmd.prompt = "(hbnb) "
 
-    def emptyline(self, line):
+    def emptyline(self, line=""):
         """Makes the command interpreter do nothing on empty line"""
         pass
 
@@ -149,19 +149,16 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def help_create(self):
-        print("Creates a new instance of BaseModel, saves it to JSON \
-                file and prints the id.\n")
+        print("Creates a new instance, saves it to file and print id.\n")
 
     def help_show(self):
-        print("Prints a string representation of an instance based \
-                on class name and id.\n")
+        print("Prints a string representation of an instance.\n")
 
     def help_destroy(self):
         print("Deletes an instance based on the class name and id\n")
 
     def help_all(self):
-        print("Prints all string representation of all instances based\
-                or not on the class name.\n")
+        print("Prints all string representation of all instances.\n")
 
     def help_update(self):
         print("Updates an instance by adding or updating an attribute.\n")
