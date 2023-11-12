@@ -30,6 +30,15 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(my_dict, f)
 
+    def delete(self, obj=None):
+        """A method that deletes an instance if it's inside attribute
+        __objects"""
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if (key, obj) in self.__objects.items:
+                self.__objects.pop(key, None)
+        self.save()
+
     def reload(self):
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as f:

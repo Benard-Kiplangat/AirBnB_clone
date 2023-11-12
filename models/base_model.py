@@ -46,3 +46,7 @@ class BaseModel:
         my_dict["created_at"] = my_dict["created_at"].isoformat()
         my_dict["__class__"] = type(self).__name__
         return my_dict
+
+    def delete(self):
+        """A method that deletes an instance"""
+        models.storage.delete(self)
