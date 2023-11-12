@@ -11,10 +11,7 @@ class HBNBCommand(cmd.Cmd):
     cmd.Cmd.prompt = "(hbnb)"
 
     def emptyline(self, line):
-        """
-        A command to make the hbnb command interpreter do nothing
-        on an empty line
-        """
+        """Makes the command interpreter do nothing on empty line"""
         pass
 
     def do_quit(self, line):
@@ -44,11 +41,11 @@ class HBNBCommand(cmd.Cmd):
         elif line != "BaseModel":
             print("** class doesn't exists **")
         else:
-                new_model = BaseModel()
-                new_model.name = line
-                new_model.my_number = 89
-                new_model.save()
-                print(new_model.id)
+            new_model = BaseModel()
+            new_model.name = line
+            new_model.my_number = 89
+            new_model.save()
+            print(new_model.id)
 
     def do_show(self, line):
         """Shows an instance based on id or class name"""
@@ -60,7 +57,8 @@ class HBNBCommand(cmd.Cmd):
         if (len(attrbs) > 1):
             for obj_id in all_objs.keys():
                 obj = all_objs[obj_id]
-                if attrbs[0] == obj.name:
+                obj_name = type(obj).__name__
+                if attrbs[0] == obj_name:
                     obj_name_avail = 1
                     if attrbs[1] == obj.id:
                         obj_id_avail = 1
@@ -85,7 +83,8 @@ class HBNBCommand(cmd.Cmd):
         if (len(attrbs) > 1):
             for obj_id in all_objs.keys():
                 obj = all_objs[obj_id]
-                if attrbs[0] == obj.name:
+                obj_name = type(obj).__name__
+                if attrbs[0] == obj_name:
                     obj_name_avail = 1
                     if attrbs[1] == obj.id:
                         obj_id_avail = 1
@@ -105,10 +104,11 @@ class HBNBCommand(cmd.Cmd):
         """Prints all instances based or not on class name"""
         all_objs = storage.all()
         for obj_id in all_objs.keys():
-                obj = all_objs[obj_id]
-                if line:
-                    if obj.name == line:
-                        print(obj)
+            obj = all_objs[obj_id]
+            obj_name = type(obj).__name__
+            if line:
+                if obj_name == line:
+                    print(obj)
                 else:
                     print(obj)
 
@@ -122,7 +122,8 @@ class HBNBCommand(cmd.Cmd):
         if (len(attrbs) > 1):
             for obj_id in all_objs.keys():
                 obj = all_objs[obj_id]
-                if attrbs[0] == obj.name:
+                obj_name = type(obj).__name__
+                if attrbs[0] == obj_name:
                     obj_name_avail = 1
                     if attrbs[1] == obj.id:
                         obj_id_avail = 1

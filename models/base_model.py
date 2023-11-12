@@ -37,7 +37,8 @@ class BaseModel:
 
     def __str__(self):
         """Creates a string representation of the object"""
-        return "[{}] ({}) <{}>".format(type(self).__name__, self.id, self.__dict__)
+        oname = type(self).__name__
+        return "[{}] ({}) <{}>".format(oname, self.id, self.__dict__)
 
     def __repr__(self):
         """Returns a string representation of the instance"""
