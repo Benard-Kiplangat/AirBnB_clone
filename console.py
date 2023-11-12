@@ -29,10 +29,10 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def help_quit(self):
-        print("\nQuits hbnb loop of hbnb when user enters quit")
+        print("Quits hbnb loop of hbnb when user enters quit.")
 
     def help_EOF(self):
-        print("\nQuits hbnb loop when user enters EOF")
+        print("Quits hbnb loop when user enters EOF.")
 
     def do_create(self, line):
         """Creates new instances and saves to JSON files and prints id"""
@@ -149,23 +149,22 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def help_create(self):
-        print("\nCreates a new instance of BaseModel, saves it to JSON \
+        print("Creates a new instance of BaseModel, saves it to JSON \
                 file and prints the id.")
 
     def help_show(self):
-        print("\nPrints a string representation of an instance based \
+        print("Prints a string representation of an instance based \
                 on class name and id.")
 
     def help_destroy(self):
-        print("\nDeletes an instance based on the class name and id")
+        print("Deletes an instance based on the class name and id")
 
     def help_all(self):
-        print("\nPrints all string representation of all instances based\
+        print("Prints all string representation of all instances based\
                 or not on the class name.")
 
     def help_update(self):
-        print("\n Updates an instance based on the class name and id by \
-                by adding or updating attribute.")
+        print("Updates an instance by adding or updating an attribute.")
 
 
 if __name__ == "__main__":
