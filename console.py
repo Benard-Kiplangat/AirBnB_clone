@@ -217,7 +217,7 @@ class HBNBCommand(cmd.Cmd):
                 cmd.Cmd.default(self, line)
 
     def help_create(self):
-        """Documentation for create""" 
+        """Documentation for create"""
         print("Creates a new instance, saves it to file and print id.\n")
 
     def help_count(self):

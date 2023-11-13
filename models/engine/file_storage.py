@@ -17,7 +17,6 @@ class FileStorage:
     all_classes = {"BaseModel", "User", "State", "City",
                    "Amenity", "Place", "Review"}
 
-
     def __init__(self):
         """The init function to initialize the FileStorage class"""
         self.__file_path = "file.json"
