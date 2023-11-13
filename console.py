@@ -4,11 +4,21 @@ The console for our AirBnB project
 """
 import cmd
 from models import storage
+from datetime import datetime
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+import re
 
 
 class HBNBCommand(cmd.Cmd):
     """The HBNB command line"""
+    all_classes = ["BaseModel", "User", "State", "City",
+                   "Amenity", "Place", "Review"]
     cmd.Cmd.prompt = "(hbnb) "
 
     def emptyline(self, line=""):
@@ -39,14 +49,35 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates new instances and saves to JSON files and prints id"""
-        if line == "":
+        class_names = line.split(" ")
+        if line is None or line == "":
             print("** class name missing **")
-        elif line != "BaseModel":
+        elif class_names[0] not in storage.all_classes:
             print("** class doesn't exists **")
         else:
-            new_model = BaseModel()
-            new_model.name = line
-            new_model.my_number = 89
+            new_model = eval("{}()".format(class_names[0]))
+            for i in range(1, len(class_names)):
+                rex = r'^(\S+)\=(\S+)'
+                match = re.search(rex, class_names[i])
+                if not match:
+                    continue
+                key = match.group(1)
+                value = match.group(2)
+                cast = None
+                if not re.search('^".*"$', value):
+                    if '.' in value:
+                        cast = float
+                    else:
+                        cast = int
+                else:
+                    value = value.replace('"', '')
+                    value = value.replace('_', ' ')
+                if cast:
+                    try:
+                        value = cast(value)
+                    except ValueError:
+                        pass
+                setattr(new_model, key, value)
             new_model.save()
             print(new_model.id)
 
@@ -92,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
                     if attrbs[1] == obj.id:
                         obj_id_avail = 1
             if obj_name_avail and obj_id_avail:
-                del obj
+                storage.delete(obj)
                 storage.save()
             elif obj_name_avail == 1 and obj_id_avail == 0:
                 print("** no instance found **")
