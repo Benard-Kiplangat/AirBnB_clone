@@ -14,6 +14,8 @@ from models.review import Review
 
 class FileStorage:
     """A class that serializes and deserializes JSON file objects"""
+    all_classes = {"BaseModel", "User", "State", "City",
+                   "Amenity", "Place", "Review"}
 
     def __init__(self):
         """The init function to initialize the FileStorage class"""
@@ -47,7 +49,7 @@ class FileStorage:
         __objects"""
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            if (key, obj) in self.__objects.items:
+            if (key, obj) in self.__objects.items():
                 self.__objects.pop(key, None)
         self.save()
 
