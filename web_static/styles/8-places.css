@@ -31,37 +31,42 @@
 	border-radius: 50%;
 	min-width: 60px;
 	height: 60px;
-	margin-top: -20px;
+	padding: 5px;
+	margin-top: -30px;
 
 }
-.places article .price_by_night p{
+.price_by_night p{
 	color: #FF5A5F;
 	font-size: 30px;
+}
+.places .user p {
+	padding-bottom: 10px;
 }
 .places article .information {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 	height: 80px;
+	margin: 10px 0;
 	border-top: 1px solid #DDDDDD;
-	border-bottom: 1px solid #DDDDDD;
 }
+.max_guest p, .number_rooms p, .number_bathrooms p {
+	padding-top: 60px;
+	text-align: center;
+	}
 .places article .information .max_guest {
 	width: 100px;
-        height: 50px;
         background: no-repeat center / contain url(../images/icon_group.png) #FFFFFF;
         background-size: 50%;
 }
 .places article .information .number_rooms {
         width: 100px;
-        height: 50px;
         background: no-repeat center / contain url(../images/icon_bed.png) #FFFFFF;
         background-size: 50%;
 }
 .places article .information .number_bathrooms {
 	width: 100px;
-	height: 50px;
 	background: no-repeat center / contain url(../images/icon_bath.png) #FFFFFF;
 	background-size: 50%;
 }
